@@ -19,10 +19,10 @@ class TonberryManager():
     NB_SHOP = 20
     NB_BYTE_PER_ITEM = 2
     ITEM_FILE = os.path.join("Resources", "item.txt")
-    SHOP_NAME_LIST = ["Pet shop Timber", "Shop common n°1", "Shop common n°2", "Shop common n°3", "Shop common n°4", "Shop common n°5", "Shop common n°6",
-                      "Shop common n°7", "Cloud's Shop (Esthar shop)", "Shop common n°8",
-                      "Shop common n°9", "Shop common n°10", "Shop common n°11", "Shop common n°12", "Shop common n°13", "Shop common n°14", "Shop common n°15",
-                      "Cheryl's store (Esthar Pet Shop)", "Karen's shop (Esthar bookstore)", "Johnny's shop (Esthar Shop!!!)"]
+    SHOP_NAME_LIST = ["Timber Pet Shop", "Balamb Shop", "Dollet Shop", "Timber Shop", "Deling City Shop", "Winhill Shop", "FH Shop",
+                      "Trabia Shop", "Esthar Shop (Cloud's Shop)", "Balamb Shop (Laguna's World)",
+                      "Dollet Shop (Laguna's World)", "Timber Shop (Laguna's World)", "Deling City Shop (Laguna's World)", "Winhill Shop (Laguna's World)", "FH Shop (Laguna's World)", "Trabia Shop (Laguna's World)", "Man from Garden",
+                      "Esthar Pet Shop (Cheryl's store)", "Esthar Book Store (Karen's shop)", "Esthar Shop!!! (Johnny's shop)"]
 
     def __init__(self):
         self.shop_file_data = bytearray()
