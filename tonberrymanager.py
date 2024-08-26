@@ -20,8 +20,8 @@ class TonberryManager():
     NB_BYTE_PER_ITEM = 2
     ITEM_FILE = os.path.join("Resources", "item.txt")
     SHOP_NAME_LIST = ["Timber Pet Shop", "Balamb Shop", "Dollet Shop", "Timber Shop", "Deling City Shop", "Winhill Shop", "FH Shop",
-                      "Trabia Shop", "Esthar Shop (Cloud's Shop)", "Balamb Shop (Laguna's World)",
-                      "Dollet Shop (Laguna's World)", "Timber Shop (Laguna's World)", "Deling City Shop (Laguna's World)", "Winhill Shop (Laguna's World)", "FH Shop (Laguna's World)", "Trabia Shop (Laguna's World)", "Man from Garden",
+                      "Trabia Shop - UNUSED!", "Esthar Shop (Cloud's Shop)", "Balamb Shop (Laguna's World) - UNUSED!",
+                      "Dollet Shop (Laguna's World) - UNUSED!", "Timber Shop (Laguna's World) - UNUSED!", "Deling City Shop (Laguna's World) - UNUSED!", "Winhill Shop (Laguna's World)", "FH Shop (Laguna's World) - UNUSED!", "Trabia Shop (Laguna's World) - UNUSED!", "Man from Garden",
                       "Esthar Pet Shop (Cheryl's store)", "Esthar Book Store (Karen's shop)", "Esthar Shop!!! (Johnny's shop)"]
 
     def __init__(self):
