@@ -1,18 +1,20 @@
 import os
-import sys
 
-from PyQt6 import sip
-from PyQt6.QtCore import Qt, QCoreApplication, QThreadPool, QRunnable, QObject, pyqtSignal, pyqtSlot, QThread, QSignalBlocker
-from PyQt6.QtGui import QIcon, QFont, QAction
-from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QCheckBox, QMessageBox, QProgressDialog, \
-    QMainWindow, QProgressBar, QRadioButton, \
-    QLabel, QFrame, QStyle, QSizePolicy, QButtonGroup, QComboBox, QHBoxLayout, QFileDialog, QToolBar
+from PyQt6.QtCore import Qt, QSignalBlocker
+from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtWidgets import QWidget, QPushButton, QVBoxLayout, QCheckBox, QLabel, QFrame, QComboBox, QHBoxLayout, \
+    QFileDialog, QLayout
+from PyQt6.uic.properties import QtGui
 
 from tonberrymanager import TonberryManager, Shop
 
 
 class TonberryShop(QWidget):
     NB_COLUMN_ITEM = 4
+    IMAGE_LIST = ["pet-shop-timber.png", "shop-balamb.png", "shop-dollet.png", "shop-timber.png",
+                  "shop-deling-city.png", "shop-winhill.png", "shop-horizon.png", "", "shops-esthar.png", "", "", "", "",
+                  "shop-winhill-laguna.png", "", "", "shop-man-from-garden", "shops-esthar.png", "shops-esthar.png",
+                  "shops-esthar.png"]
 
     def __init__(self, icon_path='Resources'):
 
@@ -50,8 +52,8 @@ class TonberryShop(QWidget):
         self.layout_single_item = [QHBoxLayout() for i in range(Shop.NB_ITEM_PER_SHOP)]
         for i in range(Shop.NB_ITEM_PER_SHOP):
             self.item_combo[i].addItems(list(self.tonberry_manager.item_values.values()))
-            self.item_combo[i].activated.connect(self.__save_to_shop_info)
-            self.item_rare[i].toggled.connect(self.__save_to_shop_info)
+            self.item_combo[i].activated.connect(self.__item_combo_activated)
+            self.item_rare[i].toggled.connect(self.__item_rare_activated)
 
             self.layout_single_item[i].addWidget(self.item_label[i])
             self.layout_single_item[i].addWidget(self.item_rare[i])
@@ -68,6 +70,15 @@ class TonberryShop(QWidget):
             for j in range(i * self.NB_COLUMN_ITEM, i * self.NB_COLUMN_ITEM + self.NB_COLUMN_ITEM):
                 self.layout_sub_item[i].addLayout(self.layout_single_item[j])
 
+        self.image_location = QPixmap(os.path.join("Resources", self.IMAGE_LIST[0]))
+        self.image_location_drawer = QLabel()
+        self.image_location_drawer.setPixmap(self.image_location)
+        self.image_location_layout = QHBoxLayout()
+        self.image_location_layout.addStretch(1)
+        self.image_location_layout.addWidget(self.image_location_drawer)
+        self.image_location_layout.addStretch(1)
+
+
         self.layout_top.addWidget(self.file_dialog_button)
         self.layout_top.addWidget(self.save_button)
         self.layout_top.addWidget(self.shop_list)
@@ -75,12 +86,15 @@ class TonberryShop(QWidget):
 
         self.layout_main.addLayout(self.layout_top)
         self.layout_main.addLayout(self.layout_item)
+        self.layout_main.addLayout(self.image_location_layout)
+        self.layout_main.setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
 
         self.setLayout(self.layout_main)
         self.show()
 
     def load_file(self):
-        file_name = self.file_dialog.getOpenFileName(parent=self, caption="Search shop.bin file", filter="*.bin", directory=os.getcwd())[0]
+        file_name = self.file_dialog.getOpenFileName(parent=self, caption="Search shop.bin file", filter="*.bin",
+                                                     directory=os.getcwd())[0]
         if file_name:
             self.file_path = file_name
             self.tonberry_manager.read_shop_file(file_name)
@@ -91,15 +105,33 @@ class TonberryShop(QWidget):
         if self.file_path:
             self.tonberry_manager.write_shop_file(self.file_path)
 
+    def __item_combo_activated(self):
+        self.__save_to_shop_info()
+
+    def __item_rare_activated(self):
+        self.__save_to_shop_info()
+
+
     def __save_to_shop_info(self):
         for item_index in range(Shop.NB_ITEM_PER_SHOP):
-            self.tonberry_manager.shop_info[self.current_shop_index].item[item_index] = self.item_combo[item_index].currentText()
-            self.tonberry_manager.shop_info[self.current_shop_index].rare[item_index] = self.item_rare[item_index].isChecked()
+            self.tonberry_manager.shop_info[self.current_shop_index].item[item_index] = self.item_combo[
+                item_index].currentText()
+            self.tonberry_manager.shop_info[self.current_shop_index].rare[item_index] = self.item_rare[
+                item_index].isChecked()
+
 
     def reload_item(self):
         self.current_shop_index = self.shop_list.currentIndex()
         for item_index in range(Shop.NB_ITEM_PER_SHOP):
-            with QSignalBlocker( self.item_combo[item_index]):
-                self.item_combo[item_index].setCurrentText(self.tonberry_manager.shop_info[self.current_shop_index].item[item_index])
+            with QSignalBlocker(self.item_combo[item_index]):
+                self.item_combo[item_index].setCurrentText(
+                    self.tonberry_manager.shop_info[self.current_shop_index].item[item_index])
             with QSignalBlocker(self.item_rare[item_index]):
-                self.item_rare[item_index].setChecked(self.tonberry_manager.shop_info[self.current_shop_index].rare[item_index])
+                self.item_rare[item_index].setChecked(
+                    self.tonberry_manager.shop_info[self.current_shop_index].rare[item_index])
+        self.__update_image()
+
+    def __update_image(self):
+        self.image_location = QPixmap(os.path.join("Resources", self.IMAGE_LIST[self.current_shop_index]))
+        self.image_location_drawer.setPixmap(self.image_location)
+
