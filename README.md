@@ -5,4 +5,5 @@ Each item as 2 values: The item itself, and the rarity. When "rare" is checked, 
 
 Enjoy !
 
-![image](https://github.com/user-attachments/assets/47579b0e-79f5-49e3-94ff-0d9a9e12ef5d)
+![image](https://github.com/user-attachments/assets/54fb3e33-13b5-4804-a7af-b3e02a495371)
+
