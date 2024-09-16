@@ -1,0 +1,10 @@
+.venv/Scripts/pyinstaller.exe -n TonberryShop -F --specpath release/build --distpath release --workpath release/build --onefile --noconsole --icon=../../Resources/icon.ico main.py;
+mkdir -p release/TonberryShop-x.x;
+cp -R Resources release/TonberryShop-x.x/;
+cp release/*.exe release/TonberryShop-x.x/;
+cd release/TonberryShop-x.x;
+"C:\Program Files\7-Zip\7z.exe" a -tzip ../TonberryShop-x.x.zip .;
+cd ..;
+rm -r TonberryShop-x.x;
+rm -r build;
+rm *.exe;
