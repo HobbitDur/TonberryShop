@@ -7,5 +7,6 @@ Check <a href="https://github.com/HobbitDur/TonberryShop/wiki">the wiki</a> for 
 
 Enjoy !
 
-![image](https://github.com/user-attachments/assets/54fb3e33-13b5-4804-a7af-b3e02a495371)
+![image](https://github.com/user-attachments/assets/a83f1687-184e-4605-949b-73d588c50f47)
+
 
